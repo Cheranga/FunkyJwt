@@ -29,6 +29,7 @@ namespace FunkyDI.QueryHandlers
 
             //
             // Let's simulate that if the requested id is even, we return an actual customer, otherwise we return as null
+            //
             if (query.Id % 2 == 0)
             {
                 return Task.FromResult(new Customer {Id = query.Id, Name = $"Customer {query.Id}", Address = $"Address {query.Id}"});
