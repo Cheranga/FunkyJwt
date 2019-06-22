@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.705
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunkyDI", "FunkyDI\FunkyDI.csproj", "{1D1EB91D-894A-4657-88FF-D4401639CE9E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunkyDI", "FunkyDI\FunkyDI.csproj", "{1D1EB91D-894A-4657-88FF-D4401639CE9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunkyDI.Tests", "FunkyDI.Tests\FunkyDI.Tests.csproj", "{04A93F71-B81B-42AF-8142-91962A834830}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{1D1EB91D-894A-4657-88FF-D4401639CE9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D1EB91D-894A-4657-88FF-D4401639CE9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D1EB91D-894A-4657-88FF-D4401639CE9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04A93F71-B81B-42AF-8142-91962A834830}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04A93F71-B81B-42AF-8142-91962A834830}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04A93F71-B81B-42AF-8142-91962A834830}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04A93F71-B81B-42AF-8142-91962A834830}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
