@@ -3,21 +3,6 @@ using FunkyDI.Models;
 
 namespace FunkyDI.QueryHandlers
 {
-    public class GetCustomerByIdQuery
-    {
-        public GetCustomerByIdQuery(int id)
-        {
-            Id = id;
-        }
-
-        public int Id { get; }
-    }
-
-    public interface IQueryHandler<in TQuery, TResponse> where TQuery : class where TResponse : class
-    {
-        Task<TResponse> HandleAsync(TQuery query);
-    }
-
     public class GetCustomerByIdHandler : IQueryHandler<GetCustomerByIdQuery, Customer>
     {
         public Task<Customer> HandleAsync(GetCustomerByIdQuery query)
@@ -26,7 +11,6 @@ namespace FunkyDI.QueryHandlers
             {
                 return Task.FromResult<Customer>(null);
             }
-
             //
             // Let's simulate that if the requested id is even, we return an actual customer, otherwise we return as null
             //

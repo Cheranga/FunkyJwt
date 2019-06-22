@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
@@ -31,11 +30,5 @@ namespace FunkyDI
                 return null;
             }
         }
-    }
-
-    public class UserInformation
-    {
-        public Guid DeviceId { get; set; }
-        public Guid UserId { get; set; }
     }
 }

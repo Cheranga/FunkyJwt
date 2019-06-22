@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Dynamic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using FunkyDI.Configs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace FunkyDI
 {
@@ -70,7 +72,7 @@ namespace FunkyDI
             return GetPrincipal(bearerToken) != null;
         }
 
-        public TResponse To<TResponse>(HttpRequest request) where TResponse : class
+        public TResponse To<TResponse>(HttpRequest request, string claim) where TResponse : class
         {
             var principal = GetPrincipal(request);
             if (principal == null)
@@ -78,19 +80,34 @@ namespace FunkyDI
                 return null;
             }
 
-            var obj = new ExpandoObject();
-            var dictionary = (IDictionary<string, object>) obj;
-
-            foreach (var claim in principal.Claims)
+            var foundClaim = principal.Claims.FirstOrDefault(x => string.Equals(x.Type, claim, StringComparison.OrdinalIgnoreCase));
+            if (foundClaim == null || string.IsNullOrWhiteSpace(foundClaim.Value))
             {
-                dictionary.Add(claim.Type, claim.Value);
+                return null;
             }
 
-            var serializedContent = JsonConvert.SerializeObject(obj);
+            var response = JsonConvert.DeserializeObject<TResponse>(foundClaim.Value);
+            return response;
 
-            var deserialized = JsonConvert.DeserializeObject<TResponse>(serializedContent);
+            //var obj = new ExpandoObject();
+            //var dictionary = (IDictionary<string, object>) obj;
 
-            return deserialized;
+            //foreach (var claim in principal.Claims)
+            //{
+            //    dictionary.Add(claim.Type, claim.Value);
+            //}
+
+            //var serializedContent = JsonConvert.SerializeObject(obj);
+            ////serializedContent.Replace("\\", )
+
+            //var someOther = JsonConvert.DeserializeObject(serializedContent);
+            //var otherSerializedContent = JsonConvert.SerializeObject(someOther,typeof(TResponse),Formatting.None, null);
+
+            //var a = JsonConvert.DeserializeObject<TResponse>(otherSerializedContent);
+
+            //var deserialized = JsonConvert.DeserializeObject<TResponse>(serializedContent);
+
+            //return deserialized;
         }
 
         private ClaimsPrincipal GetPrincipal(string bearerToken)

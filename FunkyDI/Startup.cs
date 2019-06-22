@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using FunkyDI;
 using FunkyDI.Configs;
+using FunkyDI.DTO;
 using FunkyDI.Models;
 using FunkyDI.QueryHandlers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -28,6 +30,7 @@ namespace FunkyDI
             services.AddSingleton<SecurityHandler>();
 
             services.AddScoped<IQueryHandler<GetCustomerByIdQuery, Customer>, GetCustomerByIdHandler>();
+            services.AddScoped<IQueryHandler<GetAuthorizationsForUserByIdQuery, AllowedFeatureCollection>, GetAuthorizationsForUserByIdQueryHandler>();
         }
 
         private static void RegisterConfiguration(IServiceCollection services)

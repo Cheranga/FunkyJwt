@@ -41,11 +41,18 @@ namespace FunkyDI.Functions
         {
             logger.LogInformation($"Invoked {nameof(GetCustomerFunction)}");
 
-            var userInformation = _securityHandler.To<UserInformation>(request);
+            var userInformation = _securityHandler.To<AllowedFeatureCollection>(request, FeatureConstants.AllowedFeaturesClaim);
 
-            if (userInformation == null)
+            if (userInformation?.Features == null || !userInformation.Features.Any())
             {
                 return new StatusCodeResult((int)HttpStatusCode.Unauthorized);
+            }
+
+            var hasAccess = userInformation.Features.FirstOrDefault(x => x.FeatureId == FeatureConstants.Customers) != null;
+
+            if (!hasAccess)
+            {
+                return new StatusCodeResult((int) HttpStatusCode.Unauthorized);
             }
 
             var customer = await _queryHandler.HandleAsync(new GetCustomerByIdQuery(id));
@@ -59,9 +66,7 @@ namespace FunkyDI.Functions
             {
                 customer.Id,
                 customer.Name,
-                customer.Address,
-                userInformation.UserId,
-                userInformation.DeviceId
+                customer.Address
             };
 
             return new OkObjectResult(data);
