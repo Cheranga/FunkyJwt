@@ -17,6 +17,8 @@ namespace FunkyDI
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
+            
+
             var services = builder.Services;
 
             services.AddLogging();
@@ -30,20 +32,17 @@ namespace FunkyDI
 
         private static void RegisterConfiguration(IServiceCollection services)
         {
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Environment.CurrentDirectory)
-                .AddJsonFile(@"Configs/database.settings.json")
-                .AddJsonFile(@"Configs/token.settings.json")
-                .Build();
+            var connectionString = Environment.GetEnvironmentVariable("DatabaseConnectionString");
+            var tokenSecurityKey = Environment.GetEnvironmentVariable("TokenSecurityKey");
 
-            var databaseConfiguration = new DatabaseConfiguration();
-            configuration.GetSection("DatabaseConfiguration").Bind(databaseConfiguration);
+            if (string.IsNullOrWhiteSpace(connectionString) || string.IsNullOrWhiteSpace(tokenSecurityKey))
+            {
+                throw new Exception("Invalid configuration");
+            }
 
-            var tokenConfiguration = new TokenConfiguration();
-            configuration.GetSection("TokenConfiguration").Bind(tokenConfiguration);
             
-            services.AddSingleton(databaseConfiguration);
-            services.AddSingleton(tokenConfiguration);
+            services.AddSingleton(new DatabaseConfiguration{ConnectionString = connectionString});
+            services.AddSingleton(new TokenConfiguration {SecurityKey = tokenSecurityKey});
         }
     }
 }
