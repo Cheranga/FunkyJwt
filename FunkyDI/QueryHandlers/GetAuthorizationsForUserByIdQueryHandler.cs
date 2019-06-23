@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using FunkyDI.DTO;
-using FunkyDI.Models;
 
 namespace FunkyDI.QueryHandlers
 {

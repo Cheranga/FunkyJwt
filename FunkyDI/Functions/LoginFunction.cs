@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.IO;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using FunkyDI.DTO;
@@ -11,15 +8,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 
 namespace FunkyDI.Functions
 {
     public class LoginFunction
     {
-        private readonly SecurityHandler _securityHandler;
         private readonly IQueryHandler<GetAuthorizationsForUserByIdQuery, AllowedFeatureCollection> _getAuthorizationsHandler;
+        private readonly SecurityHandler _securityHandler;
 
         public LoginFunction(SecurityHandler securityHandler, IQueryHandler<GetAuthorizationsForUserByIdQuery, AllowedFeatureCollection> getAuthorizationsHandler)
         {
@@ -40,7 +36,7 @@ namespace FunkyDI.Functions
             var id = loginDto.UserName.Equals("cheranga", StringComparison.OrdinalIgnoreCase) ? 1 : 2;
 
             var allowedFeatures = await _getAuthorizationsHandler.HandleAsync(new GetAuthorizationsForUserByIdQuery(id));
-            
+
             var token = _securityHandler.GenerateToken(
                 new Claim(FeatureConstants.AllowedFeaturesClaim, JsonConvert.SerializeObject(allowedFeatures)));
 

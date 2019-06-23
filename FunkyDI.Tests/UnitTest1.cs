@@ -15,7 +15,6 @@ namespace FunkyDI.Tests
                 rng.GetBytes(key);
 
                 var randomKey = Convert.ToBase64String(key);
-
             }
         }
     }

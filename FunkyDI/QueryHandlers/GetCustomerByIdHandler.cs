@@ -11,6 +11,7 @@ namespace FunkyDI.QueryHandlers
             {
                 return Task.FromResult<Customer>(null);
             }
+
             //
             // Let's simulate that if the requested id is even, we return an actual customer, otherwise we return as null
             //

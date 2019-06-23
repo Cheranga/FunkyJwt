@@ -2,11 +2,11 @@
 {
     public class GetAuthorizationsForUserByIdQuery
     {
-        public int Id { get; }
-
         public GetAuthorizationsForUserByIdQuery(int id)
         {
             Id = id;
         }
+
+        public int Id { get; }
     }
 }

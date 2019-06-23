@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text;
-
-namespace FunkyDI.DTO
+﻿namespace FunkyDI.DTO
 {
     public class LoginDtoRequest
     {
